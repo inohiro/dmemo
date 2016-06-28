@@ -1,39 +1,41 @@
 - content_for :header do
   %h1.page-header
-    = @database_memo.name
-    = link_to edit_database_memo_path(@database_memo) do
+    = @schema_memo.name
+    = link_to edit_schema_memo_path(@schema_memo) do
       %i.fa.fa-edit
 
-  - unless @database_memo.linked?
+  - unless @schema_memo.linked?
     .box.box-warning
       .box-header
         %h4
-          %i.fa.fa-warning= t("unlinked_database")
+          %i.fa.fa-warning= t("unlinked_schema")
       .box-body
-        = link_to "Delete database information", @database_memo,
+        = link_to "Delete schema information", @schema_memo,
           method: :delete,
           class: "btn btn-lg btn-danger",
-          data: { confirm: "Delete database #{@database_memo.name} information?" }
+          data: { confirm: "Delete database #{@schema_memo.name} information?" }
 
   %ol.breadcrumb
     %li
       = link_to root_path do
         %i.fa.fa-home
         Home
+    %li
+      = link_to database_memo_path(@schema_memo.database_memo.name)
     %li.active
-      = @database_memo.name
+      = @schema_memo.name
 
 .memo-block.box.box-info.with-border
   .box-body
     .markdown-block
-      - if @database_memo.description.present?
-        = @database_memo.description_html
+      - if @schema_memo.description.present?
+        = @schema_memo.description_html
       - else
         = t("no_description")
   .box-footer
-    = l(@database_memo.updated_at)
-    - if @database_memo.logs.exists?
-      = link_to database_memo_logs_path(@database_memo.id) do
+    = l(@schema_memo.updated_at)
+    - if @schema_memo.logs.exists?
+      = link_to schema_memo_logs_path(@schema_memo.id) do
         %i.fa.fa-clock-o
 
 - if @database_memo.single_schema?

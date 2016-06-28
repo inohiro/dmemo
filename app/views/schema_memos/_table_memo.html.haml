@@ -1,10 +1,10 @@
 %tr
   %td
-    = link_to table_memo.name, database_schema_table_path(@database_memo.name, table_memo.schema_memo.name, table_memo.name)
+    = link_to table_memo.name, database_memo_table_path(@database_memo.name, table_memo.name)
     - unless table_memo.linked?
       %i.fa.fa-exclamation-triangle{ data: { toggle: "tooltip", placement: "bottom", title: t("unlinked_table") } }
   %td
     - if table_memo.description.present?
       = table_memo.description_text.truncate(30)
   %td
-    = table_memo.column_memos.map(&:name).join(", ").truncate(100)
+    = Array.wrap(@column_memo_names[table_memo.id]).join(", ").truncate(100)
